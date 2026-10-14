@@ -1,0 +1,1515 @@
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VYBE STUDIOS — Create. Capture. Connect.</title>
+    <!-- Fonts: Space Grotesk & Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config for Custom Palette & Fonts -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        midnight: '#08090F',
+                        navy: '#0D1022',
+                        violet: '#7048FF',
+                        neon: '#448DFF',
+                        ice: '#F5F5FA',
+                        muted: '#8D8E9B',
+                        gold: '#FFCC00'
+                    },
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        body: ['Manrope', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'vybe-gradient': 'linear-gradient(135deg, #7048FF 0%, #448DFF 100%)',
+                        'text-gradient': 'linear-gradient(90deg, #F5F5FA 0%, #448DFF 50%, #7048FF 100%)',
+                        'grid-pattern': 'linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --midnight: #08090F;
+            --navy: #0D1022;
+            --violet: #7048FF;
+            --neon: #448DFF;
+            --ice: #F5F5FA;
+            --muted: #8D8E9B;
+        }
+
+        body {
+            background-color: var(--midnight);
+            color: var(--ice);
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        @media (pointer: coarse) {
+            body {
+                cursor: auto;
+            }
+            .custom-cursor {
+                display: none !important;
+            }
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Outlined Transparent Text */
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(245, 245, 250, 0.75);
+            transition: all 0.4s ease;
+        }
+        .text-outline:hover {
+            -webkit-text-stroke: 1.5px #448DFF;
+            text-shadow: 0 0 35px rgba(68, 141, 255, 0.35);
+        }
+
+        /* Subtle Film Grain Overlay */
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 90;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Viewfinder Corners */
+        .viewfinder-corner {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-color: rgba(112, 72, 255, 0.7);
+            pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .viewfinder-corner {
+            width: 30px;
+            height: 30px;
+            border-color: #448DFF;
+        }
+        .vf-tl { top: 14px; left: 14px; border-top: 2px solid; border-left: 2px solid; }
+        .vf-tr { top: 14px; right: 14px; border-top: 2px solid; border-right: 2px solid; }
+        .vf-bl { bottom: 14px; left: 14px; border-bottom: 2px solid; border-left: 2px solid; }
+        .vf-br { bottom: 14px; right: 14px; border-bottom: 2px solid; border-right: 2px solid; }
+
+        /* Selective Glassmorphism */
+        .glass-card {
+            background: rgba(13, 16, 34, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(245, 245, 250, 0.08);
+        }
+        .glass-card-hover {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(112, 72, 255, 0.45);
+            box-shadow: 0 12px 40px -10px rgba(112, 72, 255, 0.25), 0 0 25px -5px rgba(68, 141, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08090F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1B203E;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7048FF;
+        }
+
+        /* Animations */
+        @keyframes pulseSlow {
+            0%, 100% { opacity: 0.35; transform: scale(1); }
+            50% { opacity: 0.65; transform: scale(1.08); }
+        }
+        .animate-pulse-slow {
+            animation: pulseSlow 8s ease-in-out infinite;
+        }
+
+        @keyframes floatWireframe {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(3deg); }
+        }
+        .animate-float {
+            animation: floatWireframe 10s ease-in-out infinite;
+        }
+
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-midnight text-ice antialiased selection:bg-violet selection:text-white">
+
+    <!-- Film Grain Overlay -->
+    <div class="film-grain"></div>
+
+    <!-- Custom Circular Cursor -->
+    <div id="cursor-dot" class="custom-cursor fixed top-0 left-0 w-2.5 h-2.5 bg-neon rounded-full pointer-events-none z-[120] -translate-x-1/2 -translate-y-1/2 transition-transform duration-75"></div>
+    <div id="cursor-ring" class="custom-cursor fixed top-0 left-0 w-10 h-10 border border-ice/40 rounded-full pointer-events-none z-[119] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-200 ease-out">
+        <span id="cursor-label" class="text-[9px] font-heading font-bold tracking-widest uppercase text-ice opacity-0 transition-opacity duration-200"></span>
+    </div>
+
+    <!-- Sticky Translucent Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-white/[0.07] bg-midnight/75 backdrop-blur-xl py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            
+            <!-- Left: Official Logo + Tagline -->
+            <a href="#home" data-cursor="HOME" class="flex items-center gap-3.5 group focus:outline-none">
+                <div class="relative w-14 h-11 sm:w-16 sm:h-12 rounded-lg overflow-hidden bg-[#060913] border border-white/10 flex items-center justify-center p-0.5 shadow-lg group-hover:border-neon/50 transition-colors">
+                    <img src="https://www.designarena.ai/u/7a9fafb3-6d1d-4112-92a1-8e646542abc6" 
+                         alt="VYBE STUDIOS Official Logo" 
+                         class="w-full h-full object-contain" />
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-heading font-bold text-lg sm:text-xl tracking-wider text-ice flex items-center gap-1.5">
+                        VYBE <span class="text-xs font-normal tracking-[0.25em] text-neon">STUDIOS</span>
+                    </span>
+                    <span class="text-[9px] sm:text-[10px] font-heading tracking-[0.22em] text-muted uppercase">
+                        CREATE. <span class="text-gold">CAPTURE.</span> CONNECT.
+                    </span>
+                </div>
+            </a>
+
+            <!-- Desktop Center Navigation -->
+            <nav class="hidden lg:flex items-center gap-8">
+                <a href="#home" class="nav-link text-xs font-heading uppercase tracking-[0.18em] text-ice hover:text-neon transition-colors">Home</a>
+                <a href="#about" class="nav-link text-xs font-heading uppercase tracking-[0.18em] text-muted hover:text-ice transition-colors">About</a>
+                <a href="#portfolio" class="nav-link text-xs font-heading uppercase tracking-[0.18em] text-muted hover:text-ice transition-colors">Portfolio</a>
+                <a href="#services" class="nav-link text-xs font-heading uppercase tracking-[0.18em] text-muted hover:text-ice transition-colors">Services</a>
+                <a href="#process" class="nav-link text-xs font-heading uppercase tracking-[0.18em] text-muted hover:text-ice transition-colors">Process</a>
+                <a href="#contact" class="nav-link text-xs font-heading uppercase tracking-[0.18em] text-muted hover:text-ice transition-colors">Contact</a>
+            </nav>
+
+            <!-- Right: Book a Shoot CTA + Animated Hamburger Menu -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <a href="#booking" data-cursor="BOOK" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-vybe-gradient text-ice font-heading text-xs font-semibold uppercase tracking-[0.15em] shadow-[0_0_25px_rgba(112,72,255,0.4)] hover:shadow-[0_0_35px_rgba(68,141,255,0.65)] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                    <span class="w-2 h-2 rounded-full bg-ice animate-ping"></span>
+                    <span>Book a Shoot</span>
+                </a>
+
+                <!-- Animated Hamburger Button -->
+                <button id="menu-toggle" aria-label="Toggle Menu" data-cursor="MENU" class="relative w-11 h-11 rounded-full glass-card border border-white/10 flex flex-col items-center justify-center gap-1.5 hover:border-neon/60 transition-colors focus:outline-none">
+                    <span id="bar-1" class="w-5 h-0.5 bg-ice transition-all duration-300"></span>
+                    <span id="bar-2" class="w-3.5 h-0.5 bg-neon transition-all duration-300 self-end mr-3"></span>
+                    <span id="bar-3" class="w-5 h-0.5 bg-ice transition-all duration-300"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Fullscreen / Drawer Navigation Overlay -->
+    <div id="mobile-drawer" class="fixed inset-0 z-40 bg-midnight/95 backdrop-blur-2xl opacity-0 pointer-events-none transition-all duration-500 flex flex-col justify-between pt-28 pb-10 px-6 sm:px-16">
+        <!-- Geometric background accent -->
+        <div class="absolute right-10 top-1/4 w-96 h-96 bg-violet/10 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 my-auto">
+            <div class="lg:col-span-7 flex flex-col space-y-4">
+                <span class="text-xs font-heading uppercase tracking-[0.3em] text-neon mb-2">// SCENE SELECTION</span>
+                <a href="#home" class="drawer-link font-heading text-4xl sm:text-6xl font-bold tracking-tight text-ice hover:text-neon transition-all flex items-center gap-4 group">
+                    <span class="text-xs font-mono text-muted group-hover:text-violet">01</span> HOME
+                </a>
+                <a href="#about" class="drawer-link font-heading text-4xl sm:text-6xl font-bold tracking-tight text-ice hover:text-neon transition-all flex items-center gap-4 group">
+                    <span class="text-xs font-mono text-muted group-hover:text-violet">02</span> ABOUT
+                </a>
+                <a href="#portfolio" class="drawer-link font-heading text-4xl sm:text-6xl font-bold tracking-tight text-ice hover:text-neon transition-all flex items-center gap-4 group">
+                    <span class="text-xs font-mono text-muted group-hover:text-violet">03</span> PORTFOLIO
+                </a>
+                <a href="#services" class="drawer-link font-heading text-4xl sm:text-6xl font-bold tracking-tight text-ice hover:text-neon transition-all flex items-center gap-4 group">
+                    <span class="text-xs font-mono text-muted group-hover:text-violet">04</span> SERVICES
+                </a>
+                <a href="#booking" class="drawer-link font-heading text-4xl sm:text-6xl font-bold tracking-tight text-ice hover:text-neon transition-all flex items-center gap-4 group">
+                    <span class="text-xs font-mono text-muted group-hover:text-violet">05</span> BOOK A SHOOT
+                </a>
+                <a href="#contact" class="drawer-link font-heading text-4xl sm:text-6xl font-bold tracking-tight text-ice hover:text-neon transition-all flex items-center gap-4 group">
+                    <span class="text-xs font-mono text-muted group-hover:text-violet">06</span> CONTACT
+                </a>
+            </div>
+
+            <!-- Right column inside menu drawer -->
+            <div class="lg:col-span-5 flex flex-col justify-end border-t lg:border-t-0 lg:border-l border-white/10 pt-8 lg:pt-0 lg:pl-12">
+                <img src="https://www.designarena.ai/u/7a9fafb3-6d1d-4112-92a1-8e646542abc6" alt="VYBE STUDIOS Logo" class="w-40 mb-6 rounded-xl border border-white/10" />
+                <p class="text-muted text-sm leading-relaxed mb-6">
+                    Independent creative production house crafting high-impact commercials, music visuals, and cinematic brand stories.
+                </p>
+                <div class="space-y-2 text-xs font-mono text-ice/80">
+                    <div>STUDIO STATUS: <span class="text-emerald-400">● BOOKING Q2/Q3 SHOOTS</span></div>
+                    <div>DIRECT: <a href="mailto:hello@vybestudios.co" class="text-neon underline">hello@vybestudios.co</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl w-full mx-auto flex flex-wrap items-center justify-between text-xs text-muted border-t border-white/10 pt-6">
+            <span>© 2025 VYBE STUDIOS. ALL RIGHTS RESERVED.</span>
+            <span class="font-mono tracking-widest text-ice/60">CREATE. CAPTURE. CONNECT.</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         HERO SECTION
+    =========================================== -->
+    <section id="home" class="relative min-h-screen pt-28 pb-16 flex flex-col justify-between overflow-hidden bg-grid-pattern bg-[size:48px_48px]">
+        
+        <!-- Interactive Floating Particles Canvas -->
+        <canvas id="hero-particles" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+        <!-- Blue-Violet Ambient Lighting Glows -->
+        <div class="absolute top-1/4 -left-32 w-[480px] h-[480px] bg-violet/25 rounded-full blur-[150px] pointer-events-none animate-pulse-slow"></div>
+        <div class="absolute bottom-10 -right-32 w-[520px] h-[520px] bg-neon/20 rounded-full blur-[160px] pointer-events-none animate-pulse-slow"></div>
+
+        <!-- Abstract Geometric Wireframe SVG -->
+        <div class="absolute right-[6%] top-[18%] hidden xl:block pointer-events-none opacity-35 animate-float z-0">
+            <svg width="360" height="360" viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="180" cy="180" r="140" stroke="url(#wireGrad)" stroke-width="1" stroke-dasharray="6 6"/>
+                <circle cx="180" cy="180" r="98" stroke="#448DFF" stroke-width="0.75" stroke-opacity="0.5"/>
+                <polygon points="180,30 315,255 45,255" stroke="#7048FF" stroke-width="1" fill="none" stroke-opacity="0.6"/>
+                <polygon points="180,330 315,105 45,105" stroke="#448DFF" stroke-width="1" fill="none" stroke-opacity="0.4"/>
+                <line x1="180" y1="0" x2="180" y2="360" stroke="#F5F5FA" stroke-opacity="0.15"/>
+                <line x1="0" y1="180" x2="360" y2="180" stroke="#F5F5FA" stroke-opacity="0.15"/>
+                <defs>
+                    <linearGradient id="wireGrad" x1="0" y1="0" x2="360" y2="360" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#7048FF"/>
+                        <stop offset="1" stop-color="#448DFF"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <!-- Camera Viewfinder HUD Top Bar -->
+        <div class="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-2">
+            <div class="flex flex-wrap items-center justify-between gap-4 py-3 px-4 rounded-xl glass-card border border-white/[0.06] text-[11px] font-mono tracking-widest text-muted">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center gap-2 text-ice font-semibold">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span> REC
+                    </span>
+                    <span id="live-timecode" class="text-neon">00:00:14:22</span>
+                    <span class="hidden sm:inline text-white/20">|</span>
+                    <span class="hidden sm:inline">4K RAW • 24FPS • ISO 800</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-ice/80 uppercase tracking-[0.22em]">INDEPENDENT CREATIVE STUDIO</span>
+                    <span class="px-2 py-0.5 rounded bg-violet/20 border border-violet/40 text-neon text-[10px]">BAT 98%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Hero Center Content -->
+        <div class="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 my-auto py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                
+                <!-- Left 8 Cols: Oversized Stacked Typography -->
+                <div class="lg:col-span-8 space-y-6">
+                    <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-navy/90 border border-violet/40 text-xs font-heading tracking-[0.25em] uppercase text-neon">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-violet"></i>
+                        <span>VISUAL STORIES. REAL IMPACT.</span>
+                    </div>
+
+                    <!-- Oversized Stacked Words -->
+                    <div class="font-heading font-bold tracking-tighter leading-[0.92] select-none">
+                        <h1 class="text-6xl sm:text-8xl xl:text-[104px] text-ice block reveal-item active">
+                            CREATE.
+                        </h1>
+                        <div class="text-6xl sm:text-8xl xl:text-[104px] text-outline block reveal-item active" style="transition-delay: 120ms;">
+                            CAPTURE.
+                        </div>
+                        <div class="text-6xl sm:text-8xl xl:text-[104px] bg-clip-text text-transparent bg-gradient-to-r from-ice via-neon to-violet block reveal-item active" style="transition-delay: 240ms;">
+                            CONNECT.
+                        </div>
+                    </div>
+
+                    <!-- Supporting Copy -->
+                    <p class="max-w-2xl text-base sm:text-lg md:text-xl text-muted font-normal leading-relaxed pt-2">
+                        We turn ideas into cinematic experiences through bold visuals, creative storytelling, and detail-driven production.
+                    </p>
+
+                    <!-- Hero Buttons -->
+                    <div class="flex flex-wrap items-center gap-4 pt-3">
+                        <a href="#portfolio" data-cursor="EXPLORE" class="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-vybe-gradient text-ice font-heading text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] shadow-[0_0_30px_rgba(112,72,255,0.45)] hover:shadow-[0_0_45px_rgba(68,141,255,0.75)] hover:scale-[1.02] transition-all">
+                            <span>Explore Our Work</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#booking" data-cursor="SHOOT" class="inline-flex items-center gap-3 px-7 py-4 rounded-full glass-card border border-white/15 hover:border-neon text-ice font-heading text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] hover:bg-white/[0.04] transition-all">
+                            <i data-lucide="video" class="w-4 h-4 text-neon"></i>
+                            <span>Book a Shoot</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right 4 Cols: Official Brand Showcase Card with Viewfinder Frame -->
+                <div class="lg:col-span-4">
+                    <div class="relative group rounded-2xl glass-card p-6 border border-white/10 overflow-hidden shadow-2xl">
+                        <!-- Viewfinder Corners -->
+                        <div class="viewfinder-corner vf-tl"></div>
+                        <div class="viewfinder-corner vf-tr"></div>
+                        <div class="viewfinder-corner vf-bl"></div>
+                        <div class="viewfinder-corner vf-br"></div>
+
+                        <div class="flex items-center justify-between text-[10px] font-mono text-muted mb-3">
+                            <span>CAM_A // MASTER LENS</span>
+                            <span class="text-gold">● FOCUS LOCKED</span>
+                        </div>
+
+                        <!-- Official Uploaded Brand Asset -->
+                        <div class="relative rounded-xl overflow-hidden bg-[#060913] border border-white/10 p-3 flex items-center justify-center">
+                            <img src="https://www.designarena.ai/u/7a9fafb3-6d1d-4112-92a1-8e646542abc6" 
+                                 alt="VYBE STUDIOS Official Crest" 
+                                 class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-700" />
+                        </div>
+
+                        <!-- Audio/LUFS Meter Bar -->
+                        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono">
+                            <span class="text-muted">CH1/CH2 STEREO</span>
+                            <div class="flex items-center gap-1">
+                                <span class="w-1.5 h-3 bg-emerald-400 rounded-sm animate-pulse"></span>
+                                <span class="w-1.5 h-4 bg-emerald-400 rounded-sm"></span>
+                                <span class="w-1.5 h-3.5 bg-neon rounded-sm animate-pulse"></span>
+                                <span class="w-1.5 h-5 bg-violet rounded-sm"></span>
+                                <span class="w-1.5 h-2.5 bg-gold rounded-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bottom Scroll Indicator & Label -->
+        <div class="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-xs font-mono text-muted">
+            <span class="hidden sm:inline-block tracking-[0.2em]">LOC // GLOBAL PRODUCTION UNIT</span>
+            <a href="#about" data-cursor="SCROLL" class="mx-auto sm:mx-0 flex items-center gap-3 text-ice/80 hover:text-neon transition-colors group">
+                <span class="tracking-[0.25em] uppercase text-[11px]">Scroll to Enter Frame</span>
+                <span class="w-7 h-11 rounded-full border border-white/20 flex items-start justify-center p-1.5 group-hover:border-neon">
+                    <span class="w-1.5 h-2.5 rounded-full bg-neon animate-bounce"></span>
+                </span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         ABOUT SECTION ("THE PERSON BEHIND THE FRAME")
+    =========================================== -->
+    <section id="about" class="relative py-24 sm:py-32 border-t border-white/[0.06] bg-navy/30 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                
+                <!-- Left Column: Large Portrait Frame with Viewfinder Corners & "BEHIND THE LENS" -->
+                <div class="lg:col-span-5 reveal-item">
+                    <div class="relative group rounded-2xl glass-card p-4 sm:p-5 border border-white/10">
+                        <!-- Viewfinder Corners -->
+                        <div class="viewfinder-corner vf-tl"></div>
+                        <div class="viewfinder-corner vf-tr"></div>
+                        <div class="viewfinder-corner vf-bl"></div>
+                        <div class="viewfinder-corner vf-br"></div>
+
+                        <!-- Top Viewfinder Label -->
+                        <div class="flex items-center justify-between px-2 pb-3 text-xs font-mono">
+                            <span class="inline-flex items-center gap-2 text-neon font-semibold tracking-[0.2em]">
+                                <span class="w-2 h-2 rounded-full bg-neon"></span> BEHIND THE LENS
+                            </span>
+                            <span class="text-muted">f/1.4 • 35MM PRIME</span>
+                        </div>
+
+                        <!-- Portrait Image Container (Temporary Placeholder for Founder Photo) -->
+                        <div class="relative aspect-[4/5] rounded-xl overflow-hidden bg-midnight border border-white/10">
+                            <img id="founder-portrait" 
+                                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=85" 
+                                 alt="Founder & Lead Director Portrait Placeholder" 
+                                 class="w-full h-full object-cover object-center filter contrast-110 saturate-90 group-hover:scale-105 transition-transform duration-700" />
+                            
+                            <!-- Gradient Vignette -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/20 to-transparent"></div>
+
+                            <!-- Center Crosshair Reticle -->
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40 group-hover:opacity-80 transition-opacity">
+                                <div class="w-12 h-12 border border-white/30 rounded-full flex items-center justify-center">
+                                    <div class="w-1.5 h-1.5 bg-neon rounded-full"></div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Overlay Info inside Portrait -->
+                            <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                                <div>
+                                    <span class="text-[10px] font-mono uppercase tracking-widest text-gold block">FOUNDER / CREATIVE DIRECTOR</span>
+                                    <h3 class="font-heading text-xl font-bold text-ice">VYBE LEAD DIRECTOR</h3>
+                                </div>
+                                <label for="portrait-upload" data-cursor="UPLOAD" class="cursor-pointer px-3 py-1.5 rounded-lg bg-midnight/85 hover:bg-violet text-[11px] font-mono text-ice border border-white/15 transition-colors flex items-center gap-1.5" title="Swap temporary placeholder with your photo">
+                                    <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                                    <span>Swap Photo</span>
+                                    <input id="portrait-upload" type="file" accept="image/*" class="hidden" />
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Camera Metadata Footer -->
+                        <div class="mt-3 pt-2 flex items-center justify-between text-[11px] font-mono text-muted px-1">
+                            <span>PORTRAIT PLACEHOLDER // READY FOR ASSET</span>
+                            <span class="text-ice">AF-C [EYE DETECT]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Heading, Intro Copy & 3 Animated Pillar Tiles -->
+                <div class="lg:col-span-7 space-y-8 reveal-item">
+                    <div class="space-y-3">
+                        <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-neon">
+                            <span>// 01 — DIRECTOR'S STATEMENT</span>
+                        </div>
+                        <h2 class="font-heading text-3xl sm:text-5xl font-bold tracking-tight text-ice leading-tight">
+                            THE PERSON BEHIND <span class="bg-clip-text text-transparent bg-vybe-gradient">THE FRAME</span>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-4 text-muted text-base sm:text-lg leading-relaxed">
+                        <p>
+                            Every frame has a pulse. I started <strong class="text-ice font-semibold">VYBE STUDIOS</strong> with a single obsession: bridging raw Gen Z creative energy with razor-sharp Millennial production discipline. Whether we’re on set with cinema rigs or sculpting pacing in the edit suite, we don't just document moments — we engineer emotion.
+                        </p>
+                        <p>
+                            From high-energy brand campaigns and music videos to intimate documentary storytelling, my approach treats every project like a feature film. Bold lighting, intentional camera movement, and sound design that hits you in the chest.
+                        </p>
+                    </div>
+
+                    <!-- 3 Animated Feature Tiles -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                        <!-- Tile 1: Creative Vision -->
+                        <div class="glass-card glass-card-hover p-5 rounded-xl relative overflow-hidden group">
+                            <div class="w-10 h-10 rounded-lg bg-violet/20 border border-violet/40 flex items-center justify-center text-neon mb-4 group-hover:bg-violet group-hover:text-white transition-colors">
+                                <i data-lucide="eye" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-base text-ice mb-1.5">Creative Vision</h3>
+                            <p class="text-xs text-muted leading-relaxed">
+                                Concept-first direction that transforms abstract ideas into unforgettable visual worlds.
+                            </p>
+                        </div>
+
+                        <!-- Tile 2: Story-Driven Editing -->
+                        <div class="glass-card glass-card-hover p-5 rounded-xl relative overflow-hidden group">
+                            <div class="w-10 h-10 rounded-lg bg-neon/20 border border-neon/40 flex items-center justify-center text-neon mb-4 group-hover:bg-neon group-hover:text-midnight transition-colors">
+                                <i data-lucide="film" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-base text-ice mb-1.5">Story-Driven Editing</h3>
+                            <p class="text-xs text-muted leading-relaxed">
+                                Frame-accurate rhythm, dynamic speed ramps, and immersive sound design that hold attention.
+                            </p>
+                        </div>
+
+                        <!-- Tile 3: Visual Experimentation -->
+                        <div class="glass-card glass-card-hover p-5 rounded-xl relative overflow-hidden group">
+                            <div class="w-10 h-10 rounded-lg bg-violet/20 border border-violet/40 flex items-center justify-center text-gold mb-4 group-hover:bg-gold group-hover:text-midnight transition-colors">
+                                <i data-lucide="wand-2" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-base text-ice mb-1.5">Visual Experimentation</h3>
+                            <p class="text-xs text-muted leading-relaxed">
+                                Custom LUTs, anamorphic flares, mixed-media textures, and futuristic VFX transitions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Studio Quick Stats Bar -->
+                    <div class="pt-4 border-t border-white/10 grid grid-cols-3 gap-6">
+                        <div>
+                            <div class="font-heading text-2xl sm:text-3xl font-bold text-ice">120<span class="text-neon">+</span></div>
+                            <div class="text-xs font-mono uppercase tracking-wider text-muted">Projects Delivered</div>
+                        </div>
+                        <div>
+                            <div class="font-heading text-2xl sm:text-3xl font-bold text-ice">4K/8K</div>
+                            <div class="text-xs font-mono uppercase tracking-wider text-muted">Cinema Pipeline</div>
+                        </div>
+                        <div>
+                            <div class="font-heading text-2xl sm:text-3xl font-bold text-ice">100<span class="text-violet">%</span></div>
+                            <div class="text-xs font-mono uppercase tracking-wider text-muted">Original Vybe</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         PORTFOLIO SECTION (ASYMMETRICAL GRID + FILTER + MODAL)
+    =========================================== -->
+    <section id="portfolio" class="relative py-24 sm:py-32 border-t border-white/[0.06]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Header + Filter Pills -->
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 reveal-item">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-[0.25em] text-neon block mb-2">// 02 — SELECTED WORKS</span>
+                    <h2 class="font-heading text-3xl sm:text-5xl font-bold tracking-tight text-ice">
+                        FEATURED <span class="bg-clip-text text-transparent bg-vybe-gradient">PRODUCTIONS</span>
+                    </h2>
+                </div>
+
+                <!-- Interactive Filter Buttons -->
+                <div id="portfolio-filters" class="flex flex-wrap items-center gap-2">
+                    <button data-filter="all" class="filter-btn active px-4 py-2 rounded-full text-xs font-heading uppercase tracking-wider bg-vybe-gradient text-ice shadow-lg transition-all">
+                        All Works (6)
+                    </button>
+                    <button data-filter="Commercial" class="filter-btn px-4 py-2 rounded-full text-xs font-heading uppercase tracking-wider glass-card text-muted hover:text-ice transition-all">
+                        Commercial
+                    </button>
+                    <button data-filter="Music Video" class="filter-btn px-4 py-2 rounded-full text-xs font-heading uppercase tracking-wider glass-card text-muted hover:text-ice transition-all">
+                        Music Video
+                    </button>
+                    <button data-filter="Cinematography" class="filter-btn px-4 py-2 rounded-full text-xs font-heading uppercase tracking-wider glass-card text-muted hover:text-ice transition-all">
+                        Cinematography
+                    </button>
+                    <button data-filter="Brand Story" class="filter-btn px-4 py-2 rounded-full text-xs font-heading uppercase tracking-wider glass-card text-muted hover:text-ice transition-all">
+                        Brand Story
+                    </button>
+                </div>
+            </div>
+
+            <!-- Asymmetrical Responsive Bento Grid (Rendered dynamically from Central Config) -->
+            <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[340px]">
+                <!-- Populated by JS -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SERVICES SECTION (4 MINIMALIST INTERACTIVE CARDS)
+    =========================================== -->
+    <section id="services" class="relative py-24 sm:py-32 border-t border-white/[0.06] bg-navy/25">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="max-w-3xl mb-16 reveal-item">
+                <span class="text-xs font-mono uppercase tracking-[0.25em] text-neon block mb-2">// 03 — CAPABILITIES</span>
+                <h2 class="font-heading text-3xl sm:text-5xl font-bold tracking-tight text-ice mb-4">
+                    BUILT FOR <span class="bg-clip-text text-transparent bg-vybe-gradient">MAXIMUM IMPACT</span>
+                </h2>
+                <p class="text-muted text-base sm:text-lg">
+                    End-to-end production services tailored for artists, ambitious brands, and agencies ready to stand out in a crowded feed.
+                </p>
+            </div>
+
+            <!-- 4 Interactive Minimalist Service Cards -->
+            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Populated by JS -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==========================================
+         CREATIVE PROCESS TIMELINE (HORIZONTAL DESKTOP / VERTICAL MOBILE)
+    =========================================== -->
+    <section id="process" class="relative py-24 sm:py-32 border-t border-white/[0.06] overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-16 gap-6 reveal-item">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-[0.25em] text-neon block mb-2">// 04 — PRODUCTION PIPELINE</span>
+                    <h2 class="font-heading text-3xl sm:text-5xl font-bold tracking-tight text-ice">
+                        HOW WE BRING <span class="bg-clip-text text-transparent bg-vybe-gradient">THE VYBE</span>
+                    </h2>
+                </div>
+                <p class="text-xs font-mono text-muted uppercase tracking-widest">
+                    CLICK ANY STAGE TO INSPECT WORKFLOW →
+                </p>
+            </div>
+
+            <!-- Timeline Wrapper -->
+            <div class="relative">
+                <!-- Connecting Line (Horizontal on LG, Vertical on Mobile) -->
+                <div class="hidden lg:block absolute top-10 left-0 right-0 h-0.5 bg-white/10">
+                    <div id="timeline-progress-bar" class="h-full bg-vybe-gradient transition-all duration-500" style="width: 20%;"></div>
+                </div>
+
+                <div id="timeline-steps" class="grid grid-cols-1 lg:grid-cols-5 gap-6 relative z-10">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==========================================
+         BOOK A SHOOT SECTION (PREMIUM INTERACTIVE FORM)
+    =========================================== -->
+    <section id="booking" class="relative py-24 sm:py-32 border-t border-white/[0.06] bg-navy/35">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="glass-card rounded-3xl p-6 sm:p-12 border border-white/10 relative overflow-hidden shadow-2xl">
+                <!-- Ambient Corner Glow -->
+                <div class="absolute -top-24 -right-24 w-72 h-72 bg-violet/25 rounded-full blur-[100px] pointer-events-none"></div>
+
+                <!-- Viewfinder Corners -->
+                <div class="viewfinder-corner vf-tl"></div>
+                <div class="viewfinder-corner vf-tr"></div>
+                <div class="viewfinder-corner vf-bl"></div>
+                <div class="viewfinder-corner vf-br"></div>
+
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet/20 border border-violet/40 text-neon text-xs font-mono uppercase tracking-widest mb-3">
+                        <span class="w-2 h-2 rounded-full bg-neon animate-ping"></span> CALL SHEET INQUIRY
+                    </span>
+                    <h2 class="font-heading text-3xl sm:text-5xl font-bold text-ice tracking-tight">
+                        BOOK A <span class="bg-clip-text text-transparent bg-vybe-gradient">SHOOT</span>
+                    </h2>
+                    <p class="text-muted text-sm sm:text-base mt-3">
+                        Tell us about your vision, timeline, and goals. We’ll respond within 24 hours with a custom treatment and production estimate.
+                    </p>
+                </div>
+
+                <!-- Booking Form -->
+                <form id="booking-form" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">Your Name *</label>
+                            <input type="text" name="name" required placeholder="Harsh Raj" 
+                                   class="w-full px-4 py-3.5 rounded-xl bg-midnight/80 border border-white/10 text-ice placeholder-muted/50 focus:outline-none focus:border-neon transition-colors text-sm" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">Email Address *</label>
+                            <input type="email" name="email" required placeholder="humomurlessharry@gmail.com" 
+                                   class="w-full px-4 py-3.5 rounded-xl bg-midnight/80 border border-white/10 text-ice placeholder-muted/50 focus:outline-none focus:border-neon transition-colors text-sm" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">Phone / WhatsApp *</label>
+                            <input type="tel" name="phone" required placeholder="+91 8102627493" 
+                                   class="w-full px-4 py-3.5 rounded-xl bg-midnight/80 border border-white/10 text-ice placeholder-muted/50 focus:outline-none focus:border-neon transition-colors text-sm" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">Project Type *</label>
+                            <select id="booking-service-select" name="projectType" required 
+                                    class="w-full px-4 py-3.5 rounded-xl bg-midnight/80 border border-white/10 text-ice focus:outline-none focus:border-neon transition-colors text-sm">
+                                <option value="Video Production">Commercial & Brand Video</option>
+                                <option value="Music Video">Music Video / Visualizer</option>
+                                <option value="Cinematography">Director of Photography / Cinematography</option>
+                                <option value="Post-Production">Story-Driven Editing & Color Grading</option>
+                                <option value="Social Campaign">Social Content Retainer</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">Target Shoot Date</label>
+                            <input type="date" name="date" 
+                                   class="w-full px-4 py-3.5 rounded-xl bg-midnight/80 border border-white/10 text-ice focus:outline-none focus:border-neon transition-colors text-sm" />
+                        </div>
+                    </div>
+
+                    <!-- Interactive Budget Range Pills -->
+                    <div>
+                        <label class="block text-xs font-mono uppercase tracking-wider text-muted mb-3">Estimated Production Budget</label>
+                        <div id="budget-pills" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <button type="button" data-budget="₹7.5K – ₹10K" class="budget-pill py-3 px-4 rounded-xl border border-white/10 bg-midnight/60 text-xs font-heading text-muted hover:text-ice transition-all">
+                                ₹5K – ₹7.5K
+                            </button>
+                            <button type="button" data-budget="₹7.5K – ₹10K" class="budget-pill active py-3 px-4 rounded-xl border border-neon bg-violet/20 text-xs font-heading text-ice font-semibold transition-all">
+                                ₹7.5K – ₹10K
+                            </button>
+                            <button type="button" data-budget="₹10K – ₹20K" class="budget-pill py-3 px-4 rounded-xl border border-white/10 bg-midnight/60 text-xs font-heading text-muted hover:text-ice transition-all">
+                                ₹10K – ₹20K
+                            </button>
+                            <button type="button" data-budget="₹20K+ Custom" class="budget-pill py-3 px-4 rounded-xl border border-white/10 bg-midnight/60 text-xs font-heading text-muted hover:text-ice transition-all">
+                                ₹20K+ Custom
+                            </button>
+                        </div>
+                        <input type="hidden" id="selected-budget" name="budget" value="₹3K – ₹7.5K" />
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-mono uppercase tracking-wider text-muted mb-2">Project Brief / Creative Vision *</label>
+                        <textarea name="details" rows="4" required placeholder="Share your concept, locations, references, deliverables, or links..." 
+                                  class="w-full px-4 py-3.5 rounded-xl bg-midnight/80 border border-white/10 text-ice placeholder-muted/50 focus:outline-none focus:border-neon transition-colors text-sm"></textarea>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                        <span class="text-xs font-mono text-muted flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-neon"></i>
+                            NDA-friendly • Fast 24h turnaround response
+                        </span>
+                        <button type="submit" data-cursor="SEND" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-vybe-gradient text-ice font-heading text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(112,72,255,0.5)] hover:shadow-[0_0_45px_rgba(68,141,255,0.8)] transition-all">
+                            <span>Lock In Production Inquiry</span>
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Confirmation Feedback Toast -->
+                <div id="booking-success" class="hidden mt-6 p-5 rounded-2xl bg-emerald-500/15 border border-emerald-400/40 text-emerald-200 text-sm flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                        <span><strong>Call Sheet Logged!</strong> We've received your brief and will reach out within 24 hours.</span>
+                    </div>
+                    <button id="send-whatsapp-direct" class="text-xs font-mono underline text-neon ml-4 shrink-0">Send via WhatsApp too →</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==========================================
+         CONTACT SECTION (CLICKABLE SOCIAL & EMAIL TILES)
+    =========================================== -->
+    <section id="contact" class="relative py-24 sm:py-32 border-t border-white/[0.06]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal-item">
+                <span class="text-xs font-mono uppercase tracking-[0.25em] text-neon block mb-2">// 05 — CONNECT WITH US</span>
+                <h2 class="font-heading text-3xl sm:text-5xl font-bold tracking-tight text-ice">
+                    LET'S START A <span class="bg-clip-text text-transparent bg-vybe-gradient">CONVERSATION</span>
+                </h2>
+                <p class="text-muted text-base mt-3">
+                    Direct channels for collaborations, agency partnerships, press, and instant studio inquiries.
+                </p>
+            </div>
+
+            <!-- Clickable Contact Tiles Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Email Tile -->
+                <a href="mailto:humourlessharry@gmail.com" data-cursor="EMAIL" class="glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-12 h-12 rounded-xl bg-violet/20 border border-violet/40 flex items-center justify-center text-neon group-hover:bg-violet group-hover:text-white transition-colors">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-muted group-hover:text-neon transition-colors"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-mono uppercase tracking-widest text-muted block">DIRECT EMAIL</span>
+                        <span class="font-heading text-lg font-bold text-ice mt-1 block break-all">humourlessharry@gmail.com</span>
+                    </div>
+                </a>
+
+                <!-- Instagram Tile -->
+                <a href="https://instagram.com/rtrvisual" target="_blank" rel="noopener noreferrer" data-cursor="INSTA" class="glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-12 h-12 rounded-xl bg-neon/20 border border-neon/40 flex items-center justify-center text-neon group-hover:bg-neon group-hover:text-midnight transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-muted group-hover:text-neon transition-colors"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-mono uppercase tracking-widest text-muted block">INSTAGRAM REELS & BTS</span>
+                        <span class="font-heading text-lg font-bold text-ice mt-1 block">@rtrvisual</span>
+                    </div>
+                </a>
+
+                <!-- YouTube Showreel Tile -->
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" data-cursor="WATCH" class="glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-12 h-12 rounded-xl bg-violet/20 border border-violet/40 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-midnight transition-colors">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-muted group-hover:text-neon transition-colors"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-mono uppercase tracking-widest text-muted block">4K CINEMA ARCHIVE</span>
+                        <span class="font-heading text-lg font-bold text-ice mt-1 block">VYBE STUDIOS TV</span>
+                    </div>
+                </a>
+
+                <!-- WhatsApp Instant Line Tile -->
+                <a href="https://wa.me/9667551649?text=Hey%20VYBE%20STUDIOS!%20I'd%20love%20to%20discuss%20an%20upcoming%20shoot." target="_blank" rel="noopener noreferrer" data-cursor="CHAT" class="glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-midnight transition-colors">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-muted group-hover:text-emerald-400 transition-colors"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-mono uppercase tracking-widest text-muted block">PRODUCER HOTLINE</span>
+                        <span class="font-heading text-lg font-bold text-ice mt-1 block">Instant WhatsApp</span>
+                    </div>
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==========================================
+         INFORMATIVE FOOTER
+    =========================================== -->
+    <footer class="border-t border-white/10 bg-[#05060A] pt-16 pb-12 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+                
+                <!-- Brand Col -->
+                <div class="md:col-span-5 space-y-4">
+                    <div class="flex items-center gap-4">
+                        <img src="https://www.designarena.ai/u/7a9fafb3-6d1d-4112-92a1-8e646542abc6" 
+                             alt="VYBE STUDIOS Official Logo" 
+                             class="w-20 h-16 object-contain rounded-xl bg-[#060913] border border-white/10 p-1" />
+                        <div>
+                            <div class="font-heading font-bold text-xl tracking-wider text-ice">VYBE STUDIOS</div>
+                            <div class="text-[11px] font-heading tracking-[0.24em] text-muted uppercase">
+                                CREATE. <span class="text-gold">CAPTURE.</span> CONNECT.
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-muted text-sm max-w-sm leading-relaxed">
+                        Next-generation creative studio specialising in video production, precision editing, cinematography, and high-impact visual storytelling.
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="md:col-span-3 space-y-2.5">
+                    <div class="font-heading text-xs uppercase tracking-[0.2em] text-neon mb-3">Navigation</div>
+                    <ul class="space-y-2 text-muted">
+                        <li><a href="#home" class="hover:text-ice transition-colors">Home</a></li>
+                        <li><a href="#about" class="hover:text-ice transition-colors">About the Director</a></li>
+                        <li><a href="#portfolio" class="hover:text-ice transition-colors">Featured Portfolio</a></li>
+                        <li><a href="#services" class="hover:text-ice transition-colors">Production Services</a></li>
+                        <li><a href="#booking" class="hover:text-ice transition-colors">Book a Shoot</a></li>
+                        <li><a href="#contact" class="hover:text-ice transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Studio Specs / Configuration Note -->
+                <div class="md:col-span-4 space-y-3">
+                    <div class="font-heading text-xs uppercase tracking-[0.2em] text-neon mb-3">Studio Dispatch</div>
+                    <p class="text-xs text-muted leading-relaxed">
+                        Available for local and international travel shoots. Full cinema camera package, wireless director monitoring, and color-calibrated post suite.
+                    </p>
+                    <div class="p-3.5 rounded-xl bg-navy/60 border border-white/10 text-[11px] font-mono text-muted">
+                        <span class="text-ice block font-semibold mb-1">// CENTRAL CONFIG ACTIVE</span>
+                        Brand assets, portfolio items & WhatsApp endpoint managed via <code class="text-neon">VYBE_CONFIG</code>.
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted font-mono">
+                <div>© 2025 VYBE STUDIOS. ALL RIGHTS RESERVED.</div>
+                <div>DESIGNED FOR CINEMATIC STORYTELLERS • 24FPS</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         FLOATING WHATSAPP BUTTON (BOTTOM-RIGHT)
+    =========================================== -->
+    <a id="floating-whatsapp" 
+       href="https://wa.me/15552345678?text=Hi%20VYBE%20STUDIOS!%20I'm%20interested%20in%20booking%20a%20shoot." 
+       target="_blank" 
+       rel="noopener noreferrer"
+       data-cursor="WHATSAPP"
+       class="fixed bottom-6 right-6 z-40 inline-flex items-center gap-3 px-5 py-3.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-midnight font-heading text-xs font-bold uppercase tracking-wider shadow-[0_10px_30px_rgba(16,185,129,0.45)] hover:scale-105 transition-all group">
+        <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-midnight opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-midnight"></span>
+        </span>
+        <i data-lucide="message-circle" class="w-4 h-4 fill-midnight"></i>
+        <span>Chat Now</span>
+    </a>
+
+    <!-- ==========================================
+         PROJECT DETAIL MODAL
+    =========================================== -->
+    <div id="project-modal" class="fixed inset-0 z-50 bg-midnight/90 backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6">
+        <div class="relative w-full max-w-4xl rounded-3xl glass-card border border-white/15 overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
+            
+            <!-- Modal Top Bar -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-midnight/60">
+                <div class="flex items-center gap-3 text-xs font-mono">
+                    <span class="w-2.5 h-2.5 rounded-full bg-neon animate-pulse"></span>
+                    <span id="modal-category" class="text-neon uppercase tracking-widest">COMMERCIAL</span>
+                    <span class="text-white/20">|</span>
+                    <span id="modal-year" class="text-muted">2025</span>
+                </div>
+                <button id="close-modal" class="w-9 h-9 rounded-full bg-white/5 hover:bg-violet text-ice flex items-center justify-center transition-colors">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Modal Scrollable Content -->
+            <div class="overflow-y-auto p-6 sm:p-8 space-y-6">
+                <!-- Video / Visual Preview Frame -->
+                <div class="relative aspect-video rounded-2xl overflow-hidden bg-midnight border border-white/10 group">
+                    <img id="modal-image" src="" alt="Project Frame" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-midnight via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-16 h-16 rounded-full bg-vybe-gradient text-ice flex items-center justify-center shadow-[0_0_40px_rgba(112,72,255,0.8)]">
+                            <i data-lucide="play" class="w-6 h-6 fill-ice ml-0.5"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-ice/80">
+                        <span id="modal-specs">RED V-RAPTOR 8K • ANAMORPHIC</span>
+                        <span>MASTER GRADED</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <span id="modal-client" class="text-xs font-mono uppercase tracking-widest text-gold block">CLIENT</span>
+                        <h3 id="modal-title" class="font-heading text-2xl sm:text-4xl font-bold text-ice">Project Title</h3>
+                    </div>
+                    <a href="#booking" id="modal-book-similar" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-vybe-gradient text-ice font-heading text-xs font-semibold uppercase tracking-wider">
+                        <span>Book Similar Production</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <p id="modal-description" class="text-muted text-sm sm:text-base leading-relaxed"></p>
+
+                <div id="modal-deliverables" class="flex flex-wrap gap-2 pt-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         CENTRAL BRAND CONFIGURATION & INTERACTIVE LOGIC
+    =========================================== -->
+    <script>
+        /**
+         * CENTRAL CONFIGURATION FILE (VYBE_CONFIG)
+         * Stores official brand assets, editable portfolio projects, services,
+         * creative workflow stages, and external endpoints (WhatsApp, Email, Socials).
+         */
+        const VYBE_CONFIG = {
+            brand: {
+                name: "VYBE STUDIOS",
+                tagline: "CREATE. CAPTURE. CONNECT.",
+                logoUrl: "https://www.designarena.ai/u/7a9fafb3-6d1d-4112-92a1-8e646542abc6",
+                whatsappNumber: "9667551649",
+                email: "humourlessharry@gmail.com"
+            },
+            portfolio: [https://drive.google.com/drive/folders/1y106rRYxda5PJ9p8i4kYPNrvmhKYqA9D?usp=drive_link
+                {
+                    id: "proj-01",
+                    title: "NEON PULSE // CYBER RUNNER",
+                    category: "Commercial",
+                    client: "AERO ATHLETICS",
+                    year: "2025",
+                    spanClass: "md:col-span-7",
+                    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
+                    specs: "ARRI ALEXA MINI LF • ATLAS ORION ANAMORPHIC",
+                    description: "High-octane night commercial shot across rain-slicked downtown rooftops. Engineered custom wireless DMX lighting tubes and high-speed 120fps phantom sequences.",
+                    deliverables: ["60s Hero Anthem", "15s Vertical Cutdowns", "Dolby Atmos Mix", "Custom LUT Pack"]
+                },
+                {
+                    id: "proj-02",
+                    title: "MIDNIGHT ECHOES",
+                    category: "Music Video",
+                    client: "KAIRO VANCE",
+                    year: "2025",
+                    spanClass: "md:col-span-5",
+                    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1000&q=85",
+                    specs: "RED V-RAPTOR 8K VV • PRO-MIST 1/4",
+                    description: "A surrealist visual anthem blending practical low-key stage lighting with seamless frame-morph VFX transitions and kinetic camera whip-pans.",
+                    deliverables: ["Full 4K Music Video", "Spotify Canvas Loop", "Press Stills"]
+                },
+                {
+                    id: "proj-03",
+                    title: "SOLARIS CHRONICLES",
+                    category: "Cinematography",
+                    client: "NOMAD COLLECTIVE",
+                    year: "2024",
+                    spanClass: "md:col-span-5",
+                    image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=85",
+                    specs: "SONY FX9 + MAVIC 3 CINE PRO",
+                    description: "Raw, natural-light expedition cinematography capturing golden hour desert textures, intimate portrait framing, and sweeping aerial tracking shots.",
+                    deliverables: ["Director's Cut", "4K Theatrical Grade", "BTS Mini-Doc"]
+                },
+                {
+                    id: "proj-04",
+                    title: "FUTURE ARCHIVE // SS25",
+                    category: "Brand Story",
+                    client: "KINETIX LABS",
+                    year: "2025",
+                    spanClass: "md:col-span-7",
+                    image: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=85",
+                    specs: "BLACKMAGIC URSA 12K • LAOWA PROBE LENS",
+                    description: "Fashion-forward brand documentary merging macro fabric cinematography, glitch-driven editorial typography, and an original synth-bass score.",
+                    deliverables: ["3-Min Brand Film", "Lookbook Motion Loops", "Launch Teasers"]
+                },
+                {
+                    id: "proj-05",
+                    title: "VOLTAGE DRIFT",
+                    category: "Commercial",
+                    client: "APEX MOTORSPORT",
+                    year: "2024",
+                    spanClass: "md:col-span-6",
+                    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=85",
+                    specs: "RUSSIAN ARM CAR RIG • RED KOMODO-X",
+                    description: "Precision automotive pursuit commercial featuring custom suction-mount camera telemetry, visceral exhaust sound design, and razor-sharp speed ramping.",
+                    deliverables: ["45s Broadcast Spot", "Social Reels Suite", "Sound Design Stems"]
+                },
+                {
+                    id: "proj-06",
+                    title: "ASTRAL FREQUENCY",
+                    category: "Music Video",
+                    client: "NOVA SYNDICATE",
+                    year: "2025",
+                    spanClass: "md:col-span-6",
+                    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1000&q=85",
+                    specs: "COOKE PANCHRO • 3D LIDAR PROJECTION",
+                    description: "Electric violet and neon blue club Odyssey combining crowd energy with volumetric laser projection mapping and rhythmic match-cuts.",
+                    deliverables: ["4K Master Edit", "VFX Breakdown Reel", "Tour Visuals"]
+                }
+            ],
+            services: [
+                {
+                    num: "01",
+                    title: "Full-Scale Video Production",
+                    subtitle: "CONCEPT TO CALL SHEET",
+                    icon: "clapperboard",
+                    description: "End-to-end production for commercials, music videos, and brand films. We handle creative treatments, casting, location scouting, lighting design, and directing.",
+                    tags: ["Creative Direction", "On-Set Production", "Lighting & Grip"]
+                },
+                {
+                    num: "02",
+                    title: "Story-Driven Editing & Post",
+                    subtitle: "RHYTHM, PACING & VFX",
+                    icon: "scissors",
+                    description: "High-retention narrative editing, seamless speed-ramps, custom motion graphics, 12-bit DaVinci Resolve color grading, and theatrical sound design.",
+                    tags: ["Offline/Online Edit", "Color Grading", "Sound Design"]
+                },
+                {
+                    num: "03",
+                    title: "Cinematography & DOP",
+                    subtitle: "MASTERING LIGHT & MOVEMENT",
+                    icon: "aperture",
+                    description: "Cinema camera packages, anamorphic glass, Steadicam/gimbal operation, and intentional lighting setups that elevate every frame to big-screen quality.",
+                    tags: ["Cinema Rigs", "Anamorphic Optics", "Aerial Cinema"]
+                },
+                {
+                    num: "04",
+                    title: "Visual Storytelling & Campaigns",
+                    subtitle: "CULTURE-DRIVEN CONTENT",
+                    icon: "sparkles",
+                    description: "Multi-platform visual ecosystems engineered for Gen Z & Millennial audiences — vertical launch reels, documentary shorts, and brand world-building.",
+                    tags: ["Social Ecosystems", "Brand Docs", "Launch Strategy"]
+                }
+            ],
+            process: [
+                {
+                    step: "01",
+                    title: "Discovery & Vybe Check",
+                    duration: "PHASE 1",
+                    detail: "We dissect your brand DNA, target audience, visual references, and core message to define a clear creative north star."
+                },
+                {
+                    step: "02",
+                    title: "Treatment & Pre-Prod",
+                    duration: "PHASE 2",
+                    detail: "Storyboards, mood decks, shot lists, location locking, casting, and technical camera/lighting schematics."
+                },
+                {
+                    step: "03",
+                    title: "Principal Photography",
+                    duration: "PHASE 3",
+                    detail: "Lights up, camera rolling. High-efficiency set execution with cinema optics, wireless monitoring, and bold direction."
+                },
+                {
+                    step: "04",
+                    title: "The Edit & Color Lab",
+                    duration: "PHASE 4",
+                    detail: "Story assembly, rhythmic cutting, custom VFX transitions, spatial sound design, and signature color grading."
+                },
+                {
+                    step: "05",
+                    title: "Master Delivery",
+                    duration: "PHASE 5",
+                    detail: "Multi-aspect ratio masters (16:9, 9:16, 4:5) optimized for broadcast, cinema projection, and high-converting social feeds."
+                }
+            ]
+        };
+
+        // Render Portfolio Cards
+        const portfolioGrid = document.getElementById('portfolio-grid');
+        function renderPortfolio(filter = 'all') {
+            const filtered = filter === 'all' 
+                ? VYBE_CONFIG.portfolio 
+                : VYBE_CONFIG.portfolio.filter(p => p.category === filter);
+
+            portfolioGrid.innerHTML = filtered.map((item) => `
+                <article data-id="${item.id}" data-cursor="VIEW" class="portfolio-card ${item.spanClass} group relative rounded-2xl overflow-hidden glass-card border border-white/10 cursor-pointer">
+                    <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/40 to-transparent opacity-90 group-hover:opacity-95 transition-opacity"></div>
+
+                    <!-- Viewfinder Corners -->
+                    <div class="viewfinder-corner vf-tl"></div>
+                    <div class="viewfinder-corner vf-tr"></div>
+                    <div class="viewfinder-corner vf-bl"></div>
+                    <div class="viewfinder-corner vf-br"></div>
+
+                    <!-- Top Meta Badge -->
+                    <div class="absolute top-6 left-6 right-6 flex items-center justify-between text-[11px] font-mono">
+                        <span class="px-3 py-1 rounded-full bg-midnight/80 border border-white/15 text-neon uppercase tracking-wider">
+                            ${item.category}
+                        </span>
+                        <span class="text-ice/70 bg-midnight/70 px-2.5 py-1 rounded font-mono">${item.year}</span>
+                    </div>
+
+                    <!-- Bottom Title & Specs -->
+                    <div class="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-4">
+                        <div>
+                            <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-gold block mb-1">${item.client}</span>
+                            <h3 class="font-heading text-xl sm:text-2xl font-bold text-ice group-hover:text-neon transition-colors">${item.title}</h3>
+                            <p class="text-xs font-mono text-muted mt-1">${item.specs}</p>
+                        </div>
+                        <div class="w-11 h-11 rounded-full bg-vybe-gradient text-ice flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                            <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+
+            lucide.createIcons();
+
+            // Attach Modal Open Listeners
+            document.querySelectorAll('.portfolio-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const proj = VYBE_CONFIG.portfolio.find(p => p.id === card.dataset.id);
+                    if (proj) openProjectModal(proj);
+                });
+            });
+        }
+
+        // Render Services Cards
+        const servicesGrid = document.getElementById('services-grid');
+        function renderServices() {
+            servicesGrid.innerHTML = VYBE_CONFIG.services.map(srv => `
+                <div class="glass-card glass-card-hover rounded-2xl p-7 sm:p-8 flex flex-col justify-between group relative overflow-hidden">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="font-mono text-xs text-neon tracking-widest">// SERVICE ${srv.num}</span>
+                            <div class="w-12 h-12 rounded-xl bg-violet/15 border border-violet/40 flex items-center justify-center text-neon group-hover:bg-vybe-gradient group-hover:text-ice transition-all">
+                                <i data-lucide="${srv.icon}" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-mono uppercase tracking-[0.22em] text-muted block mb-1">${srv.subtitle}</span>
+                        <h3 class="font-heading text-2xl font-bold text-ice mb-3">${srv.title}</h3>
+                        <p class="text-muted text-sm leading-relaxed mb-6">${srv.description}</p>
+                    </div>
+
+                    <div class="pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex flex-wrap gap-2">
+                            ${srv.tags.map(t => `<span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-midnight/80 border border-white/10 text-ice/80">${t}</span>`).join('')}
+                        </div>
+                        <a href="#booking" data-service="${srv.title}" class="service-select-link text-xs font-heading uppercase tracking-wider text-neon hover:text-ice flex items-center gap-1.5">
+                            <span>Select</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+
+            document.querySelectorAll('.service-select-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    const selectEl = document.getElementById('booking-service-select');
+                    if (selectEl) selectEl.focus();
+                });
+            });
+        }
+
+        // Render Creative Process Timeline
+        const timelineContainer = document.getElementById('timeline-steps');
+        const timelineBar = document.getElementById('timeline-progress-bar');
+        let activeStepIndex = 0;
+
+        function renderTimeline() {
+            timelineContainer.innerHTML = VYBE_CONFIG.process.map((item, idx) => {
+                const isActive = idx === activeStepIndex;
+                return `
+                    <div data-idx="${idx}" data-cursor="STEP ${item.step}" class="timeline-card cursor-pointer glass-card rounded-2xl p-6 transition-all duration-300 ${isActive ? 'border-neon shadow-[0_0_30px_rgba(68,141,255,0.2)] -translate-y-1' : 'border-white/10 opacity-75 hover:opacity-100'}">
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center font-mono text-xs font-bold ${isActive ? 'bg-vybe-gradient text-ice shadow-lg' : 'bg-midnight border border-white/15 text-muted'}">
+                                ${item.step}
+                            </div>
+                            <span class="text-[10px] font-mono uppercase tracking-widest ${isActive ? 'text-neon' : 'text-muted'}">${item.duration}</span>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-ice mb-2">${item.title}</h3>
+                        <p class="text-xs text-muted leading-relaxed">${item.detail}</p>
+                    </div>
+                `;
+            }).join('');
+
+            if (timelineBar) {
+                timelineBar.style.width = `${((activeStepIndex + 1) / VYBE_CONFIG.process.length) * 100}%`;
+            }
+
+            document.querySelectorAll('.timeline-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    activeStepIndex = parseInt(card.dataset.idx, 10);
+                    renderTimeline();
+                });
+            });
+        }
+
+        // Modal Logic
+        const projectModal = document.getElementById('project-modal');
+        function openProjectModal(proj) {
+            document.getElementById('modal-category').textContent = proj.category;
+            document.getElementById('modal-year').textContent = proj.year;
+            document.getElementById('modal-image').src = proj.image;
+            document.getElementById('modal-specs').textContent = proj.specs;
+            document.getElementById('modal-client').textContent = `CLIENT // ${proj.client}`;
+            document.getElementById('modal-title').textContent = proj.title;
+            document.getElementById('modal-description').textContent = proj.description;
+            document.getElementById('modal-deliverables').innerHTML = proj.deliverables.map(d => 
+                `<span class="px-3 py-1.5 rounded-lg bg-violet/20 border border-violet/40 text-xs font-mono text-ice">${d}</span>`
+            ).join('');
+
+            projectModal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeProjectModal() {
+            projectModal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        document.getElementById('close-modal').addEventListener('click', closeProjectModal);
+        projectModal.addEventListener('click', (e) => {
+            if (e.target === projectModal) closeProjectModal();
+        });
+        document.getElementById('modal-book-similar').addEventListener('click', closeProjectModal);
+
+        // Portfolio Filter Click Handlers
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('bg-vybe-gradient', 'text-ice', 'shadow-lg');
+                    b.classList.add('glass-card', 'text-muted');
+                });
+                btn.classList.remove('glass-card', 'text-muted');
+                btn.classList.add('bg-vybe-gradient', 'text-ice', 'shadow-lg');
+                renderPortfolio(btn.dataset.filter);
+            });
+        });
+
+        // Mobile & Fullscreen Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const bar1 = document.getElementById('bar-1');
+        const bar2 = document.getElementById('bar-2');
+        const bar3 = document.getElementById('bar-3');
+        let menuOpen = false;
+
+        function toggleMenu() {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                mobileDrawer.classList.remove('opacity-0', 'pointer-events-none');
+                bar1.classList.add('rotate-45', 'translate-y-2');
+                bar2.classList.add('opacity-0');
+                bar3.classList.add('-rotate-45', '-translate-y-2');
+            } else {
+                mobileDrawer.classList.add('opacity-0', 'pointer-events-none');
+                bar1.classList.remove('rotate-45', 'translate-y-2');
+                bar2.classList.remove('opacity-0');
+                bar3.classList.remove('-rotate-45', '-translate-y-2');
+            }
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.drawer-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (menuOpen) toggleMenu();
+            });
+        });
+
+        // Compact Navbar Animation on Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.remove('py-4');
+                navbar.classList.add('py-2.5', 'bg-midnight/90', 'shadow-2xl');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2.5', 'bg-midnight/90', 'shadow-2xl');
+            }
+        });
+
+        // Custom Animated Circular Cursor
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        const cursorLabel = document.getElementById('cursor-label');
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let ringX = mouseX, ringY = mouseY;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+
+            const target = e.target.closest('[data-cursor], a, button');
+            if (target) {
+                const labelText = target.getAttribute('data-cursor') || '';
+                cursorRing.style.width = labelText ? '68px' : '50px';
+                cursorRing.style.height = labelText ? '68px' : '50px';
+                cursorRing.style.borderColor = '#448DFF';
+                cursorRing.style.backgroundColor = 'rgba(112, 72, 255, 0.18)';
+                cursorLabel.textContent = labelText;
+                cursorLabel.style.opacity = labelText ? '1' : '0';
+            } else {
+                cursorRing.style.width = '40px';
+                cursorRing.style.height = '40px';
+                cursorRing.style.borderColor = 'rgba(245, 245, 250, 0.4)';
+                cursorRing.style.backgroundColor = 'transparent';
+                cursorLabel.style.opacity = '0';
+            }
+        });
+
+        function animateCursorRing() {
+            ringX += (mouseX - ringX) * 0.18;
+            ringY += (mouseY - ringY) * 0.18;
+            cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+            requestAnimationFrame(animateCursorRing);
+        }
+        animateCursorRing();
+
+        // Live Camera Timecode Counter in Hero
+        const timecodeEl = document.getElementById('live-timecode');
+        let frames = 0;
+        setInterval(() => {
+            frames++;
+            const f = String(frames % 24).padStart(2, '0');
+            const s = String(Math.floor(frames / 24) % 60).padStart(2, '0');
+            const m = String(Math.floor(frames / (24 * 60)) % 60).padStart(2, '0');
+            if (timecodeEl) timecodeEl.textContent = `00:${m}:${s}:${f}`;
+        }, 1000 / 24);
+
+        // Portrait Photo Swap (Temporary Placeholder Replacer)
+        const portraitUpload = document.getElementById('portrait-upload');
+        const founderPortrait = document.getElementById('founder-portrait');
+        if (portraitUpload && founderPortrait) {
+            portraitUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        founderPortrait.src = ev.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Budget Pill Selection
+        const budgetPills = document.querySelectorAll('.budget-pill');
+        const budgetInput = document.getElementById('selected-budget');
+        budgetPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                budgetPills.forEach(p => {
+                    p.classList.remove('active', 'border-neon', 'bg-violet/20', 'text-ice', 'font-semibold');
+                    p.classList.add('border-white/10', 'bg-midnight/60', 'text-muted');
+                });
+                pill.classList.remove('border-white/10', 'bg-midnight/60', 'text-muted');
+                pill.classList.add('active', 'border-neon', 'bg-violet/20', 'text-ice', 'font-semibold');
+                budgetInput.value = pill.dataset.budget;
+            });
+        });
+
+        // Booking Form Submission & WhatsApp Handoff
+        const bookingForm = document.getElementById('booking-form');
+        const bookingSuccess = document.getElementById('booking-success');
+        const sendWhatsappDirect = document.getElementById('send-whatsapp-direct');
+        let lastSubmissionData = null;
+
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(bookingForm);
+            lastSubmissionData = Object.fromEntries(formData.entries());
+            bookingSuccess.classList.remove('hidden');
+            bookingForm.reset();
+        });
+
+        sendWhatsappDirect.addEventListener('click', () => {
+            if (!lastSubmissionData) return;
+            const msg = encodeURIComponent(
+                `Hi VYBE STUDIOS! Booking Inquiry:\nName: ${lastSubmissionData.name}\nProject: ${lastSubmissionData.projectType}\nBudget: ${lastSubmissionData.budget}\nBrief: ${lastSubmissionData.details}`
+            );
+            window.open(`https://wa.me/${VYBE_CONFIG.brand.whatsappNumber}?text=${msg}`, '_blank');
+        });
+
+        // Hero Floating Particles Canvas
+        const canvas = document.getElementById('hero-particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        for (let i = 0; i < 42; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 2 + 0.6,
+                dx: (Math.random() - 0.5) * 0.4,
+                dy: (Math.random() - 0.5) * 0.4,
+                color: Math.random() > 0.5 ? '#7048FF' : '#448DFF'
+            });
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.dx;
+                p.y += p.dy;
+                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 0.45;
+                ctx.fill();
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        // Scroll Reveal Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal-item').forEach(el => observer.observe(el));
+
+        // Initialize All Components
+        renderPortfolio('all');
+        renderServices();
+        renderTimeline();
+        lucide.createIcons();
+    </script>
+</body>
+</html>
